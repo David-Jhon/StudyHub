@@ -47,6 +47,9 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     form.append('reqtype', 'fileupload');
     // Note: You can add a userhash here if you have one from Catbox.moe
     // form.append('userhash', process.env.CATBOX_USERHASH);
+    if (process.env.CATBOX_USERHASH) {
+    form.append('userhash', process.env.CATBOX_USERHASH);
+    }
     form.append('fileToUpload', req.file.buffer, {
       filename: req.file.originalname,
       contentType: req.file.mimetype
@@ -94,3 +97,4 @@ app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
   console.log(`📁 Upload endpoint: http://localhost:${port}/api/upload`);
 });
+
