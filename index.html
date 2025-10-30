@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyHub – Instantly Share & Discover Class Files</title>
+  <meta name="description" content="Organize, share, and access your class study files and slides with zero hassle. PDF, notes, images, and more—all in one modern portal.">
+  <meta name="keywords" content="studyhub, class, study, materials, slides, pdf, notes, group, learning, resources, university, teacher, upload, student, education, collaborate, organize">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <meta name="googlebot" content="index,follow">
+  <meta name="application-name" content="StudyHub">
+  <meta property="og:site_name" content="StudyHub">
+  <meta name="author" content="StudyHub Team">
+  <meta name="copyright" content="2024 StudyHub Team">
+  <meta name="language" content="en">
+  <link rel="canonical" href="https://your-vercel-url.vercel.app/">
+  <link rel="alternate" href="https://your-vercel-url.vercel.app/" hreflang="en">
+
+  <!-- Google Search Console (add your verification code below if needed) -->
+  <!--<meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE">-->
+
+  <!-- Microdata for better Google parsing -->
+  <meta itemprop="name" content="StudyHub – Share. Learn. Grow.">
+  <meta itemprop="description" content="Organize, share, and access study files. PDF, slides, images, text—all in one place. Free and instant.">
+  <meta itemprop="image" content="https://i.ibb.co.com/ns5ngzQ6/study-hub-metaimage.png">
+  <link rel="canonical" href="https://studyhub.example.com/">
+
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIHJ4PSIyNCIgZmlsbD0iIzYzNjZGMSIvPjxyZWN0IHg9IjI4IiB5PSIzNiIgd2lkdGg9IjY0IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iI2ZmZiIvPjxyZWN0IHg9IjMzIiB5PSI0MSIgd2lkdGg9IjU0IiBoZWlnaHQ9IjM4IiByeD0iNCIgZmlsbD0iI0VFRjJGRiIvPjxwYXRoIGQ9Im01MCA2NS41IDggNy41IDE2LTE2IiBzdHJva2U9IiM2MzY2RjEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHJlY3QgeD0iMzYiIHk9IjU0IiB3aWR0aD0iMTgiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI0E1QjRGQyIvPjwvc3ZnPg==">
+  <link rel="shortcut icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHJ4PSIxMiIgZmlsbD0iIzYzNjZGMSIvPgogIDxyZWN0IHg9IjExIiB5PSIxNSIgd2lkdGg9IjI2IiBoZWlnaHQ9IjE4IiByeD0iMyIgZmlsbD0id2hpdGUiLz4KICA8cmVjdCB4PSIxMyIgeT0iMTciIHdpZHRoPSIyMiIgaGVpZ2h0PSIxNCIgcng9IjIiIGZpbGw9IiNFRUYyRkYiLz4KICA8cGF0aCBkPSJNMjAgMjZMMjMgMjlMMzIgMjAiIHN0cm9rZT0iIzYzNjZGMSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4=">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIHJ4PSIyNCIgZmlsbD0iIzYzNjZGMSIvPjxyZWN0IHg9IjI4IiB5PSIzNiIgd2lkdGg9IjY0IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iI2ZmZiIvPjxyZWN0IHg9IjMzIiB5PSI0MSIgd2lkdGg9IjU0IiBoZWlnaHQ9IjM4IiByeD0iNCIgZmlsbD0iI0VFRjJGRiIvPjxwYXRoIGQ9Im01MCA2NS41IDggNy41IDE2LTE2IiBzdHJva2U9IiM2MzY2RjEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHJlY3QgeD0iMzYiIHk9IjU0IiB3aWR0aD0iMTgiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI0E1QjRGQyIvPjwvc3ZnPg==">
+  <meta name="theme-color" content="#6366f1">
+
+
+  <meta property="og:title" content="StudyHub - Share. Learn. Grow.">
+  <meta property="og:description" content="Easily share and access class materials, slides, PDFs, and notes for your academic group. Modern and mobile-friendly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://studyhub.example.com/">
+  <meta property="og:image" content="https://i.ibb.co.com/ns5ngzQ6/study-hub-metaimage.png">
+  <meta property="og:image:alt" content="StudyHub logo and preview">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="StudyHub - Share. Learn. Grow.">
+  <meta name="twitter:description" content="Share and discover class and study materials in your learning community. Modern, free, and open for all.">
+  <meta name="twitter:image" content="https://i.ibb.co.com/ns5ngzQ6/study-hub-metaimage.png">
+  <meta name="twitter:url" content="https://studyhub.example.com/">
+  
+  
+  <style type="text/css">@font-face {font-family:Inter;font-style:normal;font-weight:300;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:300;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:300;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:300;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:300;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:300;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:300;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:600;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:800;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:800;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:800;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:800;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:800;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:800;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:800;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:900;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:900;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:900;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:900;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:900;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:900;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}</style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <meta name="color-scheme" content="light dark">
+  <style>
+    :root { color-scheme: light dark; }
+    html, body { height: 100%; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .glass { backdrop-filter: blur(10px); background: color-mix(in oklab, white 70%, transparent); }
+    @media (prefers-color-scheme: dark) {
+      .glass { background: color-mix(in oklab, rgba(17,24,39,1) 60%, transparent); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 dark:from-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100">
+  <header class="sticky top-0 z-40">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+      <div class="glass rounded-2xl border border-white/20 dark:border-white/10 shadow-lg">
+        <div class="flex items-center justify-between px-4 py-3">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-xl bg-indigo-600 text-white grid place-items-center shadow-md shadow-indigo-600/30">
+              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIHJ4PSIyNCIgZmlsbD0iIzYzNjZGMSIvPjxyZWN0IHg9IjI4IiB5PSIzNiIgd2lkdGg9IjY0IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iI2ZmZiIvPjxyZWN0IHg9IjMzIiB5PSI0MSIgd2lkdGg9IjU0IiBoZWlnaHQ9IjM4IiByeD0iNCIgZmlsbD0iI0VFRjJGRiIvPjxwYXRoIGQ9Im01MCA2NS41IDggNy41IDE2LTE2IiBzdHJva2U9IiM2MzY2RjEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHJlY3QgeD0iMzYiIHk9IjU0IiB3aWR0aD0iMTgiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI0E1QjRGQyIvPjwvc3ZnPg==" alt="StudyHub Logo" class="w-8 h-8 mx-auto my-auto">
+            </div>
+            <div>
+              <h1 class="text-xl font-bold tracking-tight">StudyHub</h1>
+              <p class="text-sm text-slate-600 dark:text-slate-400">Slides, PDFs, notes - share easily</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <button id="uploadBtn" class="sm:inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 text-sm font-medium shadow-md shadow-indigo-600/30 transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                <path d="M12 3a.75.75 0 0 1 .75.75V12h8.25a.75.75 0 0 1 0 1.5H12.75v8.25a.75.75 0 0 1-1.5 0V13.5H3a.75.75 0 0 1 0-1.5h8.25V3.75A.75.75 0 0 1 12 3Z"/>
+              </svg>
+              Upload
+            </button>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <div class="lg:col-span-8">
+              <div class="relative">
+                <input id="searchInput" type="text" placeholder="Search title, type, or uploader..." class="w-full rounded-xl border border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/70 px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-indigo-500/60">
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.156 12.06l4.267 4.267a.75.75 0 1 0 1.06-1.06l-4.267-4.267A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div class="lg:col-span-4 flex gap-2">
+              <select id="typeFilter" class="w-full rounded-xl border border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/70 px-3 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/60">
+                <option value="">All types</option>
+                <option value="pdf">PDF</option>
+                <option value="ppt">PowerPoint</option>
+                <option value="image">Images</option>
+                <option value="text">Text Files</option>
+                <option value="archive">Archives</option>
+                <option value="other">Other</option>
+              </select>
+              <select id="sortBy" class="w-44 rounded-xl border border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/70 px-3 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/60">
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="title">Title</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section class="py-10">
+      <div class="text-center max-w-3xl mx-auto" data-aos="fade-up">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Share. Learn. Grow.</h2>
+        <p class="mt-3 text-slate-600 dark:text-slate-400">Course materials, presentations, and resources from your learning community.</p>
+        <div class="mt-6">
+          <button id="ctaUpload" class="inline-flex items-center gap-2 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+              <path d="M12 3a.75.75 0 0 1 .75.75V12h8.25a.75.75 0 0 1 0 1.5H12.75v8.25a.75.75 0 0 1-1.5 0V13.5H3a.75.75 0 0 1 0-1.5h8.25V3.75A.75.75 0 0 1 12 3Z"/>
+            </svg>
+            Upload material
+          </button>
+        </div>
+      </div>
+
+      <div id="grid" class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <div id="emptyState" class="hidden mt-16 text-center text-slate-600 dark:text-slate-400" data-aos="fade-up">
+        <div class="mx-auto w-16 h-16 rounded-2xl grid place-items-center bg-white/70 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-slate-500">
+            <path d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.69-4.06a.75.75 0 0 0-1.28-.72l-3.75 6a.75.75 0 0 0 .64 1.16h2.25v2.62a.75.75 0 0 0 1.5 0v-3.37a.75.75 0 0 0-.75-.75H10.2l3.74-4.94Z"/>
+          </svg>
+        </div>
+        <p class="mt-4">No materials yet. Be the first to upload!</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="uploadModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-24 w-[95%] max-w-xl">
+      <div class="glass rounded-2xl border border-white/20 dark:border-white/10 shadow-2xl" data-aos="zoom-in">
+        <div class="p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold">Upload material</h3>
+            <button id="closeModal" class="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 0 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+
+          <form id="uploadForm" class="mt-4 space-y-4">
+            <!-- DRAG ZONE START -->
+            <div id="dragZone" class="relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-indigo-300 bg-indigo-50/70 dark:bg-slate-900/30 py-6 cursor-pointer transition-all select-none">
+              <svg class="w-10 h-10 text-indigo-400 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0 0V8m0 4h4m-4 0H8m12 8a4 4 0 01-4 4H8a4 4 0 01-4-4V8a4 4 0 014-4h4m8 8a4 4 0 01-4-4" />
+              </svg>
+              <span id="dragZoneText" class="text-indigo-600 dark:text-indigo-300 text-sm font-medium">
+                Drag & drop your file here, or click to select
+              </span>
+              <input id="hiddenFileInput" type="file" accept=".pdf,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.webp,.txt,.zip,.rar" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" style="z-index:2;">
+            </div>
+            <!-- DRAG ZONE END -->
+            <div>
+              <label class="block text-sm font-medium mb-1">Title</label>
+              <input id="titleInput" type="text" placeholder="Will default to file name" class="w-full rounded-xl border border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/70 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/60">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">File</label>
+              <input id="fileInput" type="file" accept=".pdf,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.webp,.txt,.zip,.rar" required class="block w-full text-sm file:mr-4 file:rounded-xl file:border-0 file:bg-indigo-600 file:px-4 file:py-2.5 file:text-white hover:file:bg-indigo-500">
+              <p class="mt-1 text-xs text-slate-500">PDF, PPT/PPTX, images, text files, archives. DOC/DOCX not supported by host.</p>
+            </div>
+            <div class="flex items-center justify-end gap-3 pt-2">
+              <button type="button" id="cancelUpload" class="rounded-xl px-4 py-2.5 text-sm border border-slate-200/60 dark:border-slate-700/60">Cancel</button>
+              <button type="submit" id="submitUpload" class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 text-sm font-semibold shadow shadow-indigo-600/30">
+                <span>Upload</span>
+                <svg id="spinner" class="hidden animate-spin h-4 w-4" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add overlay for fullscreen drop effect, hidden by default -->
+  <div id="dragOverlay" class="fixed inset-0 z-[60] hidden bg-indigo-600/15 pointer-events-none flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center">
+      <svg class="w-16 h-16 text-indigo-400 drop-shadow-lg animate-bounce mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0 0V8m0 4h4m-4 0H8m12 8a4 4 0 01-4 4H8a4 4 0 01-4-4V8a4 4 0 014-4h4m8 8a4 4 0 01-4-4" /></svg>
+      <span class="text-indigo-800 text-lg font-bold drop-shadow">Drop the file to upload</span>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden">
+    <div class="rounded-xl bg-slate-900 text-white px-4 py-2 shadow-lg">Saved</div>
+  </div>
+
+  <footer class="mt-16 py-10 border-t border-slate-200/60 dark:border-slate-800/60">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-sm text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>&copy; <span id="year"></span> StudyHub</p>
+      <p>Powered by Firebase</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 600, easing: 'ease-out' });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Firebase SDKs (compat for simplicity) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+  <script src="config.js"></script>
+
+  <script>
+    // Initialize Firebase with config from external file
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Anonymous auth: no admin checks; everyone can upload per rules
+
+    const state = { user: null, materials: [], filtered: [] };
+
+    const uploadBtn = document.getElementById('uploadBtn');
+    const ctaUpload = document.getElementById('ctaUpload');
+    const uploadModal = document.getElementById('uploadModal');
+    const closeModal = document.getElementById('closeModal');
+    const cancelUpload = document.getElementById('cancelUpload');
+    const uploadForm = document.getElementById('uploadForm');
+    const titleInput = document.getElementById('titleInput');
+    const fileInput = document.getElementById('fileInput');
+    const spinner = document.getElementById('spinner');
+    const grid = document.getElementById('grid');
+    const emptyState = document.getElementById('emptyState');
+    const searchInput = document.getElementById('searchInput');
+    const typeFilter = document.getElementById('typeFilter');
+    const sortBy = document.getElementById('sortBy');
+    const toast = document.getElementById('toast');
+
+    function showToast(text) {
+      toast.firstElementChild.textContent = text;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2000);
+    }
+
+    function fileTypeFromName(name) {
+      const ext = name.split('.').pop().toLowerCase();
+      if (ext === 'pdf') return 'pdf';
+      if (['ppt', 'pptx'].includes(ext)) return 'ppt';
+      if (['png','jpg','jpeg','gif','webp'].includes(ext)) return 'image';
+      if (['txt'].includes(ext)) return 'text';
+      if (['zip', 'rar'].includes(ext)) return 'archive';
+      return 'other';
+    }
+
+    function iconForType(type) {
+      const map = {
+        pdf: 'text-rose-600',
+        ppt: 'text-orange-600',
+        image: 'text-emerald-600',
+        text: 'text-blue-600',
+        archive: 'text-purple-600',
+        other: 'text-slate-600'
+      };
+      return map[type] || 'text-slate-600';
+    }
+
+    function render() {
+      grid.innerHTML = '';
+      const items = state.filtered;
+      if (!items.length) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+      for (const m of items) {
+        const card = document.createElement('a');
+        card.href = m.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.dataset.aos = 'fade-up';
+        card.className = 'group block rounded-2xl border border-slate-200/60 dark:border-slate-800/60 bg-white/70 dark:bg-slate-800/70 overflow-hidden shadow-sm hover:shadow-md transition-shadow';
+        const typeColor = iconForType(m.type);
+        card.innerHTML = `
+          <div class="p-4 flex items-start gap-3">
+            <div class="shrink-0 rounded-xl bg-slate-100 dark:bg-slate-900 p-3 ${typeColor}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                <path d="M3.75 4.5A2.25 2.25 0 0 1 6 2.25h7.126c.597 0 1.17.237 1.59.659l4.125 4.125c.422.42.659.993.659 1.59V19.5A2.25 2.25 0 0 1 17.25 21.75H6A2.25 2.25 0 0 1 3.75 19.5v-15Z" />
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <h4 class="truncate font-semibold">${m.title}</h4>
+              <p class="text-xs text-slate-500 mt-0.5">${m.type.toUpperCase()} • ${m.uploadedBy || 'Unknown'}</p>
+              <p class="text-xs text-slate-400 mt-1">${new Date(m.createdAt?.toMillis?.() || m.createdAt).toLocaleString()}</p>
+            </div>
+          </div>
+          <div class="p-4 border-t border-slate-200/60 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3" role="img" aria-label="Download">
+     <title>Download</title> <path d="M12 3v12" /> <path d="M7.5 9.5L12 14l4.5-4.5" />
+     <path d="M21 17.25A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V16.5" />
+     <path d="M3 16.5h18" />
+     </svg>
+     <span>Click to view or download</span>
+     </div>
+     <a href="${m.url}" download="${m.title}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3" role="img" aria-label="Download">
+  <title>Download</title>
+  <path d="M12 3v12" />
+  <path d="M7.5 9.5L12 14l4.5-4.5" />
+  <path d="M21 17.25A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V16.5" />
+  <path d="M3 16.5h18" />
+</svg>
+
+                Download
+              </a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      }
+      AOS.refreshHard();
+    }
+
+    function applyFilters() {
+      const q = searchInput.value.trim().toLowerCase();
+      const type = typeFilter.value;
+      let items = [...state.materials];
+      if (q) {
+        items = items.filter(m => `${m.title} ${m.type} ${m.uploadedBy}`.toLowerCase().includes(q));
+      }
+      if (type) {
+        items = items.filter(m => m.type === type);
+      }
+      const sort = sortBy.value;
+      if (sort === 'newest') items.sort((a,b) => (b.createdAt?.toMillis?.()||b.createdAt) - (a.createdAt?.toMillis?.()||a.createdAt));
+      if (sort === 'oldest') items.sort((a,b) => (a.createdAt?.toMillis?.()||a.createdAt) - (b.createdAt?.toMillis?.()||b.createdAt));
+      if (sort === 'title') items.sort((a,b) => a.title.localeCompare(b.title));
+      state.filtered = items;
+      render();
+    }
+
+    // Anonymous auth handlers: auto sign in
+    let authReadyResolve;
+    const authReady = new Promise(r => { authReadyResolve = r; });
+    auth.onAuthStateChanged(async user => {
+      state.user = user;
+      if (!user) {
+        try { await auth.signInAnonymously(); } catch (e) { console.error('Anon auth failed', e); }
+      } else {
+        authReadyResolve();
+      }
+    });
+
+    function openModal() { uploadModal.classList.remove('hidden'); }
+    function closeModalFn() { uploadModal.classList.add('hidden'); uploadForm.reset(); }
+    uploadBtn.addEventListener('click', openModal);
+    ctaUpload.addEventListener('click', openModal);
+    closeModal.addEventListener('click', closeModalFn);
+    cancelUpload.addEventListener('click', closeModalFn);
+
+    // Title auto-fill from file name
+    fileInput.addEventListener('change', () => {
+      const f = fileInput.files && fileInput.files[0];
+      if (f && !titleInput.value.trim()) titleInput.value = f.name;
+    });
+
+    // Upload flow using Catbox.moe
+    uploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // Ensure anonymous auth is ready
+      if (!state.user) await authReady;
+      const file = fileInput.files[0];
+      if (!file) return;
+      
+      // Check for unsupported file types
+      const unsupportedTypes = ['doc', 'docx'];
+      const fileExt = file.name.split('.').pop().toLowerCase();
+      if (unsupportedTypes.includes(fileExt)) {
+        showToast('DOC/DOCX files not supported. Please convert to PDF or use another format.');
+        return;
+      }
+      
+      const title = (titleInput.value.trim() || file.name);
+      spinner.classList.remove('hidden');
+      try {
+        // Upload to Catbox.moe via server endpoint
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.details || `Upload failed: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        if (!result.url) {
+          throw new Error('No URL returned from upload');
+        }
+        
+        const type = fileTypeFromName(file.name);
+        await db.collection('materials').add({
+          title,
+          type,
+          url: result.url,
+          uploadedBy: 'Anonymous',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        closeModalFn();
+        showToast('Uploaded successfully!');
+      } catch (err) {
+        console.error(err);
+        showToast('Upload failed: ' + err.message);
+      } finally {
+        spinner.classList.add('hidden');
+      }
+    });
+
+    // Real-time materials
+    db.collection('materials').orderBy('createdAt', 'desc').onSnapshot(snap => {
+      const items = [];
+      snap.forEach(doc => {
+        const d = doc.data();
+        items.push({ id: doc.id, ...d });
+      });
+      state.materials = items;
+      applyFilters();
+    });
+
+    searchInput.addEventListener('input', applyFilters);
+    typeFilter.addEventListener('change', applyFilters);
+    sortBy.addEventListener('change', applyFilters);
+
+    // IMPROVED DRAG & DROP GLOBAL HANDLERS
+    window.addEventListener('dragover', function (e) {
+      // Only prevent default when upload modal is open
+      if (uploadModal && !uploadModal.classList.contains('hidden')) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+      }
+    });
+    window.addEventListener('drop', function (e) {
+      // Only prevent default and trigger modal upload logic if open
+      if (uploadModal && !uploadModal.classList.contains('hidden')) {
+        e.preventDefault();
+        // dragCounter = 0; // This variable is not defined in the provided HTML, so it's removed.
+        // dragOverlay.classList.add('hidden'); // This element is not defined in the provided HTML, so it's removed.
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          fileInput.files = e.dataTransfer.files;
+          hiddenFileInput.files = e.dataTransfer.files;
+          dragZoneText.textContent = e.dataTransfer.files[0].name;
+          if (!titleInput.value.trim()) titleInput.value = e.dataTransfer.files[0].name;
+        }
+      }
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'991b5b4ced2f40a8',t:'MTc2MDk5MzEwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
