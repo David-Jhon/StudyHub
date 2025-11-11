@@ -453,24 +453,46 @@
     sortBy.addEventListener('change', applyFilters);
 
     // IMPROVED DRAG & DROP GLOBAL HANDLERS
-    window.addEventListener('dragover', function (e) {
-      // Only prevent default when upload modal is open
-      if (uploadModal && !uploadModal.classList.contains('hidden')) {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'copy';
+    const dragOverlay = document.getElementById('dragOverlay');
+    const dragZoneText = document.getElementById('dragZoneText');
+    const hiddenFileInput = document.getElementById('hiddenFileInput');
+    let dragCounter = 0;
+
+    window.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      dragCounter++;
+      dragOverlay.classList.remove('hidden');
+    });
+
+    window.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      dragCounter--;
+      if (dragCounter === 0) {
+        dragOverlay.classList.add('hidden');
       }
     });
-    window.addEventListener('drop', function (e) {
-      // Only prevent default and trigger modal upload logic if open
-      if (uploadModal && !uploadModal.classList.contains('hidden')) {
-        e.preventDefault();
-        // dragCounter = 0; // This variable is not defined in the provided HTML, so it's removed.
-        // dragOverlay.classList.add('hidden'); // This element is not defined in the provided HTML, so it's removed.
-        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-          fileInput.files = e.dataTransfer.files;
-          hiddenFileInput.files = e.dataTransfer.files;
-          dragZoneText.textContent = e.dataTransfer.files[0].name;
-          if (!titleInput.value.trim()) titleInput.value = e.dataTransfer.files[0].name;
+
+    window.addEventListener('dragover', (e) => {
+      e.preventDefault(); // This is necessary to allow a drop
+    });
+
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragCounter = 0;
+      dragOverlay.classList.add('hidden');
+
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        // Open the modal
+        openModal();
+
+        // Populate the file input
+        fileInput.files = e.dataTransfer.files;
+        hiddenFileInput.files = e.dataTransfer.files; // for the styled component
+
+        const fileName = e.dataTransfer.files[0].name;
+        dragZoneText.textContent = fileName;
+        if (!titleInput.value.trim()) {
+          titleInput.value = fileName;
         }
       }
     });
