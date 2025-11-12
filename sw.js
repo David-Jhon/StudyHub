@@ -34,7 +34,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
   if (event.request.method === 'POST' && url.search === '?share-target') {
-    event.respondWith(Response.redirect('/'));
+    event.respondWith(caches.match('/index.html'));
     event.waitUntil(async function () {
       const formData = await event.request.formData();
       const files = formData.getAll('files');

@@ -27,7 +27,6 @@
   <link rel="shortcut icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHJ4PSIxMiIgZmlsbD0iIzYzNjZGMSIvPgogIDxyZWN0IHg9IjExIiB5PSIxNSIgd2lkdGg9IjI2IiBoZWlnaHQ9IjE4IiByeD0iMyIgZmlsbD0id2hpdGUiLz4KICA8cmVjdCB4PSIxMyIgeT0iMTciIHdpZHRoPSIyMiIgaGVpZ2h0PSIxNCIgcng9IjIiIGZpbGw9IiNFRUYyRkYiLz4KICA8cGF0aCBkPSJNMjAgMjZMMjMgMjlMMzIgMjAiIHN0cm9rZT0iIzYzNjZGMSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4=">
   <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIHJ4PSIyNCIgZmlsbD0iIzYzNjZGMSIvPjxyZWN0IHg9IjI4IiB5PSIzNiIgd2lkdGg9IjY0IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iI2ZmZiIvPjxyZWN0IHg9IjMzIiB5PSI0MSIgd2lkdGg9IjU0IiBoZWlnaHQ9IjM4IiByeD0iNCIgZmlsbD0iI0VFRjJGRiIvPjxwYXRoIGQ9Im01MCA2NS41IDggNy41IDE2LTE2IiBzdHJva2U9IiM2MzY2RjEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHJlY3QgeD0iMzYiIHk9IjU0IiB3aWR0aD0iMTgiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI0E1QjRGQyIvPjwvc3ZnPg==">
   <meta name="theme-color" content="#6366f1">
-  <link rel="manifest" href="/manifest.json">
 
 
   <meta property="og:title" content="StudyHub - Share. Learn. Grow.">
@@ -497,32 +496,6 @@
         }
       }
     });
-
-    // PWA Service Worker and Share Target
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('Service Worker registered', reg))
-        .catch(err => console.error('Service Worker registration failed', err));
-
-      navigator.serviceWorker.addEventListener('message', event => {
-        if (event.data && event.data.action === 'share') {
-          const { title, text, url, files } = event.data;
-          if (files && files.length > 0) {
-            openModal();
-            fileInput.files = new FileListItems(files);
-            titleInput.value = title || files[0].name;
-            // You can also use text and url if needed
-          }
-        }
-      });
-    }
-
-    // Helper to create a FileList-like object
-    function FileListItems (files) {
-      const b = new ClipboardEvent("").clipboardData || new DataTransfer();
-      for (let i = 0, len = files.length; i < len; i++) b.items.add(files[i]);
-      return b.files;
-    }
   </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'991b5b4ced2f40a8',t:'MTc2MDk5MzEwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
