@@ -14,6 +14,7 @@
   <meta name="copyright" content="2024 StudyHub Team">
   <meta name="language" content="en">
   <link rel="canonical" href="https://my-study-hub.vercel.app/">
+  <link rel="manifest" href="/manifest.json">
   <link rel="alternate" href="https://my-study-hub.vercel.app/" hreflang="en">
 
   <!-- Microdata for better Google parsing -->
@@ -493,6 +494,34 @@
         dragZoneText.textContent = fileName;
         if (!titleInput.value.trim()) {
           titleInput.value = fileName;
+        }
+      }
+    });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+
+    // Handle shared files from Service Worker
+    navigator.serviceWorker.addEventListener('message', event => {
+      if (event.data && event.data.action === 'share') {
+        const { files } = event.data;
+        if (files && files.length > 0) {
+          openModal();
+          // Create a new FileList and assign it to the input
+          const dataTransfer = new DataTransfer();
+          files.forEach(file => dataTransfer.items.add(file));
+          fileInput.files = dataTransfer.files;
+
+          // Trigger change event to update title input
+          fileInput.dispatchEvent(new Event('change'));
         }
       }
     });
