@@ -88,6 +88,11 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   }
 });
 
+// Fallback for POST requests to /share-target
+app.post('/share-target', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Serve index.html for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
