@@ -34,13 +34,36 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
   if (event.request.method === 'POST' && url.pathname === '/') {
-    event.respondWith(Response.redirect('/'));
+    event.respondWith(caches.match('/'));
     event.waitUntil(async function () {
-      const formData = await event.request.formData();
-      const files = formData.getAll('files');
-      const clientList = await self.clients.matchAll({ includeUncontrolled: true, type: 'window' });
-      if (clientList.length > 0) {
-        clientList[0].postMessage({ action: 'share', files });
+      try {
+        const formData = await event.request.formData();
+        const files = formData.getAll('files');
+        const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        
+        let client = null;
+        // Try to find a visible client
+        for (const c of clientList) {
+          if (c.visibilityState === 'visible') {
+            client = c;
+            break;
+          }
+        }
+        // If no visible client, just take the first one
+        if (!client && clientList.length > 0) {
+          client = clientList[0];
+        }
+
+        if (client) {
+          // Focus the client and then post the message
+          await client.focus();
+          client.postMessage({ action: 'share', files });
+        } else {
+          // If no clients are open, open a new window
+          self.clients.openWindow('/');
+        }
+      } catch (e) {
+        console.error('Share target error:', e);
       }
     }());
     return;
