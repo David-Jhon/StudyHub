@@ -234,6 +234,7 @@
 
     // Anonymous auth: no admin checks; everyone can upload per rules
 
+    let sharedFiles = [];
     const state = { user: null, materials: [], filtered: [] };
 
     const uploadBtn = document.getElementById('uploadBtn');
@@ -370,7 +371,13 @@
     });
 
     function openModal() { uploadModal.classList.remove('hidden'); }
-    function closeModalFn() { uploadModal.classList.add('hidden'); uploadForm.reset(); }
+    function closeModalFn() {
+      uploadModal.classList.add('hidden');
+      uploadForm.reset();
+      sharedFiles = [];
+      document.getElementById('dragZoneText').textContent = 'Drag & drop your file here, or click to select';
+      fileInput.parentElement.style.display = 'block';
+    }
     uploadBtn.addEventListener('click', openModal);
     ctaUpload.addEventListener('click', openModal);
     closeModal.addEventListener('click', closeModalFn);
@@ -385,56 +392,75 @@
     // Upload flow using Catbox.moe
     uploadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      // Ensure anonymous auth is ready
       if (!state.user) await authReady;
-      const file = fileInput.files[0];
-      if (!file) return;
-      
-      // Check for unsupported file types
-      const unsupportedTypes = ['doc', 'docx'];
-      const fileExt = file.name.split('.').pop().toLowerCase();
-      if (unsupportedTypes.includes(fileExt)) {
-        showToast('DOC/DOCX files not supported. Please convert to PDF or use another format.');
+
+      const filesToUpload = sharedFiles.length > 0 ? sharedFiles : Array.from(fileInput.files);
+      if (filesToUpload.length === 0) {
+        showToast('Please select a file to upload.');
         return;
       }
-      
-      const title = (titleInput.value.trim() || file.name);
+
       spinner.classList.remove('hidden');
-      try {
-        // Upload to Catbox.moe via server endpoint
-        const formData = new FormData();
-        formData.append('file', file);
-        
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData
-        });
-        
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.details || `Upload failed: ${response.statusText}`);
+      let successCount = 0;
+      let errorCount = 0;
+
+      await Promise.all(filesToUpload.map(async (file) => {
+        try {
+          const unsupportedTypes = ['doc', 'docx'];
+          const fileExt = file.name.split('.').pop().toLowerCase();
+          if (unsupportedTypes.includes(fileExt)) {
+            showToast(`Skipping unsupported file: ${file.name}`);
+            return;
+          }
+
+          const title = (filesToUpload.length === 1 && titleInput.value.trim()) ? titleInput.value.trim() : file.name;
+
+          const formData = new FormData();
+          formData.append('file', file);
+
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.details || `Upload failed for ${file.name}`);
+          }
+
+          const result = await response.json();
+          if (!result.url) {
+            throw new Error(`No URL returned for ${file.name}`);
+          }
+
+          const type = fileTypeFromName(file.name);
+          await db.collection('materials').add({
+            title,
+            type,
+            url: result.url,
+            uploadedBy: 'Anonymous',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          successCount++;
+        } catch (err) {
+          console.error(err);
+          showToast(`Upload failed for ${file.name}: ${err.message.substring(0, 100)}`);
+          errorCount++;
         }
-        
-        const result = await response.json();
-        if (!result.url) {
-          throw new Error('No URL returned from upload');
-        }
-        
-        const type = fileTypeFromName(file.name);
-        await db.collection('materials').add({
-          title,
-          type,
-          url: result.url,
-          uploadedBy: 'Anonymous',
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+      }));
+
+      spinner.classList.add('hidden');
+      if (successCount > 0) {
+        showToast(`Uploaded ${successCount} file(s) successfully!`);
+      }
+      
+      if (errorCount === 0) {
         closeModalFn();
-        showToast('Uploaded successfully!');
-      } catch (err) {
-        console.error(err);
-        showToast('Upload failed: ' + err.message);
-      } finally {
-        spinner.classList.add('hidden');
+      } else {
+        // Reset for next attempt if some failed
+        sharedFiles = [];
+        fileInput.value = '';
+        document.getElementById('dragZoneText').textContent = 'Drag & drop your file here, or click to select';
       }
     });
 
@@ -514,14 +540,21 @@
       if (event.data && event.data.action === 'share') {
         const { files } = event.data;
         if (files && files.length > 0) {
+          sharedFiles = files;
           openModal();
-          // Create a new FileList and assign it to the input
-          const dataTransfer = new DataTransfer();
-          files.forEach(file => dataTransfer.items.add(file));
-          fileInput.files = dataTransfer.files;
-
-          // Trigger change event to update title input
-          fileInput.dispatchEvent(new Event('change'));
+          
+          const dragZoneText = document.getElementById('dragZoneText');
+          if (files.length > 1) {
+            dragZoneText.textContent = `${files.length} files selected`;
+          } else {
+            dragZoneText.textContent = files[0].name;
+          }
+          
+          if (!titleInput.value.trim()) {
+            titleInput.value = files[0].name;
+          }
+          // Hide the manual file input if we have shared files
+          fileInput.parentElement.style.display = 'none';
         }
       }
     });
