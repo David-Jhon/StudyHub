@@ -15,6 +15,8 @@ const urlsToCache = [
   'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js'
 ];
 
+let sharedFiles = [];
+
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -34,36 +36,13 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
   if (event.request.method === 'POST' && url.pathname === '/') {
-    event.respondWith(caches.match('/'));
+    event.respondWith(Response.redirect('/'));
     event.waitUntil(async function () {
       try {
         const formData = await event.request.formData();
-        const files = formData.getAll('files');
-        const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-        
-        let client = null;
-        // Try to find a visible client
-        for (const c of clientList) {
-          if (c.visibilityState === 'visible') {
-            client = c;
-            break;
-          }
-        }
-        // If no visible client, just take the first one
-        if (!client && clientList.length > 0) {
-          client = clientList[0];
-        }
-
-        if (client) {
-          // Focus the client and then post the message
-          await client.focus();
-          client.postMessage({ action: 'share', files });
-        } else {
-          // If no clients are open, open a new window
-          self.clients.openWindow('/');
-        }
+        sharedFiles = formData.getAll('files');
       } catch (e) {
-        console.error('Share target error:', e);
+        console.error('Share target POST error:', e);
       }
     }());
     return;
@@ -79,4 +58,14 @@ self.addEventListener('fetch', event => {
       }
     )
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data.action === 'claim-shared-files' && sharedFiles.length > 0) {
+    const client = event.source;
+    if (client) {
+        client.postMessage({ action: 'share', files: sharedFiles });
+    }
+    sharedFiles = []; // Clear after claiming
+  }
 });
