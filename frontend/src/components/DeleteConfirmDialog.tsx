@@ -52,7 +52,7 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title }: Delet
 
                 <div className="py-4">
                     <label className="text-sm font-medium text-zinc-300 mb-2 block">
-                        Say The Magic Spell!!
+                        Say The Magic Spell
                     </label>
                     <Input
                         type="password"

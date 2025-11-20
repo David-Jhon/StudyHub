@@ -75,13 +75,13 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                         {getIcon(material.type)}
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">
+                        <span className="text-[9px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">
                             {formatDate(material.createdAt)}
                         </span>
                         {material.size && (
                             <>
                                 <span className="w-1 h-1 bg-slate-600 rounded-full" />
-                                <span className="text-[10px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">
+                                <span className="text-[9px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">
                                     {formatSize(material.size)}
                                 </span>
                             </>
@@ -89,7 +89,7 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                         {isNew(material.createdAt) && (
                             <>
                                 <span className="w-1 h-1 bg-slate-600 rounded-full" />
-                                <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">
+                                <span className="text-[9px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">
                                     NEW
                                 </span>
                             </>
@@ -103,7 +103,7 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                             {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <LinkIcon className="w-3 h-3" />}
                         </button>
                         <span className="w-1 h-1 bg-slate-600 rounded-full" />
-                        <span className="text-[10px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full uppercase tracking-wide">
+                        <span className="text-[9px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full uppercase tracking-wide">
                             {material.type}
                         </span>
                     </div>

@@ -1,0 +1,27 @@
+# Exported from Render on 2025-11-20T20:05:02Z
+version: "1"
+services:
+- type: web
+  name: slidedokan
+  runtime: node
+  repo: https://github.com/David-Jhon/StudyHub
+  plan: free
+  envVars:
+  - key: ADMIN_PASSWORD
+    sync: false
+  - key: PORT
+    sync: false
+  - key: R2_PUBLIC_URL
+    sync: false
+  - key: R2_BUCKET_NAME
+    sync: false
+  - key: R2_SECRET_ACCESS_KEY
+    sync: false
+  - key: R2_ACCESS_KEY_ID
+    sync: false
+  - key: R2_ACCOUNT_ID
+    sync: false
+  region: singapore
+  buildCommand: npm install && cd frontend && npm install && npm run build
+  startCommand: npm start
+  autoDeployTrigger: commit
