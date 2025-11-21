@@ -85,6 +85,31 @@ app.delete('/api/delete', async (req, res) => {
   }
 });
 
+app.get('/api/download', async (req, res) => {
+  try {
+    const { url, filename } = req.query;
+
+    if (!url) {
+      return res.status(400).json({ error: 'URL is required' });
+    }
+
+    const response = await axios({
+      method: 'get',
+      url: url,
+      responseType: 'stream'
+    });
+
+    res.setHeader('Content-Disposition', `attachment; filename="${filename || 'download'}"`);
+    res.setHeader('Content-Type', response.headers['content-type']);
+
+    response.data.pipe(res);
+
+  } catch (error) {
+    console.error('Download proxy error:', error);
+    res.status(500).json({ error: 'Failed to download file' });
+  }
+});
+
 async function deleteFromR2(fileName) {
   const accountId = process.env.R2_ACCOUNT_ID;
   const accessKeyId = process.env.R2_ACCESS_KEY_ID;

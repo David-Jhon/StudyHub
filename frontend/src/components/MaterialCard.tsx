@@ -67,6 +67,17 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
     };
+
+    const handleDownload = () => {
+        const downloadUrl = `/api/download?url=${encodeURIComponent(material.url)}&filename=${encodeURIComponent(material.originalName || material.title)}`;
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = material.originalName || material.title;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <Card className="group hover:shadow-lg transition-all duration-300 border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden hover:bg-white/10">
             <CardContent className="p-3">
@@ -138,14 +149,7 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                 </Button>
                 <Button
                     className="flex-1 h-9 text-xs bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm shadow-indigo-600/20"
-                    onClick={() => {
-                        const link = document.createElement('a');
-                        link.href = material.url;
-                        link.download = material.title;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }}
+                    onClick={handleDownload}
                 >
                     <Download className="w-3.5 h-3.5 mr-1.5" />
                     Download
