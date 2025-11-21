@@ -80,21 +80,18 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                         </span>
                         {material.size && (
                             <>
-                                <span className="w-1 h-1 bg-slate-600 rounded-full" />
+                                {!isNew(material.createdAt) && <span className="w-1 h-1 bg-slate-600 rounded-full" />}
                                 <span className="text-[9px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">
                                     {formatSize(material.size)}
                                 </span>
                             </>
                         )}
                         {isNew(material.createdAt) && (
-                            <>
-                                <span className="w-1 h-1 bg-slate-600 rounded-full" />
-                                <span className="text-[9px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">
-                                    NEW
-                                </span>
-                            </>
+                            <span className="text-[9px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">
+                                NEW
+                            </span>
                         )}
-                        <span className="w-1 h-1 bg-slate-600 rounded-full" />
+                        {!isNew(material.createdAt) && <span className="w-1 h-1 bg-slate-600 rounded-full" />}
                         <button
                             onClick={handleCopyLink}
                             className="p-1 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
@@ -102,7 +99,7 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                         >
                             {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <LinkIcon className="w-3 h-3" />}
                         </button>
-                        <span className="w-1 h-1 bg-slate-600 rounded-full" />
+                        {!isNew(material.createdAt) && <span className="w-1 h-1 bg-slate-600 rounded-full" />}
                         <span className="text-[9px] font-semibold text-slate-400 bg-white/5 px-2 py-0.5 rounded-full uppercase tracking-wide">
                             {material.type}
                         </span>

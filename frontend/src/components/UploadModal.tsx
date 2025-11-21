@@ -4,7 +4,6 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogDescription,
     DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -77,12 +76,15 @@ export function UploadModal({
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-xl bg-zinc-950 text-zinc-50 border-zinc-800">
+            <DialogContent
+                className="sm:max-w-xl bg-zinc-950 text-zinc-50 border-zinc-800"
+                onInteractOutside={(e) => {
+                    e.preventDefault();
+                    onClose();
+                }}
+            >
                 <DialogHeader>
                     <DialogTitle className="text-xl font-bold">Upload material</DialogTitle>
-                    <DialogDescription className="text-zinc-400">
-                        Upload files to share with your community. Supported formats: PDF, DOC/DOCX, PPT, IMAGE, VIDEO, TEXT, ARCHIVE.
-                    </DialogDescription>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-6 mt-4">
@@ -154,7 +156,7 @@ export function UploadModal({
                             </span>
                         </div>
                         <p className="text-xs text-zinc-500 mt-1">
-                            PDF, DOC/DOCX, PPT/PPTX, IMAGE, VIDEO, TEXT, ARCHIVE.
+                            Supported formats: PDF, DOC/DOCX, PPT/PPTX, IMAGE, VIDEO, TEXT, ARCHIVE.
                         </p>
                     </div>
 
