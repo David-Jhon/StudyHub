@@ -15,10 +15,11 @@ interface DeleteConfirmDialogProps {
     isOpen: boolean;
     onClose: () => void;
     onConfirm: (password: string) => Promise<void>;
-    title: string;
+    title?: string;
+    count?: number;
 }
 
-export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title }: DeleteConfirmDialogProps) {
+export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title, count = 1 }: DeleteConfirmDialogProps) {
     const [password, setPassword] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -29,7 +30,7 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title }: Delet
             await onConfirm(password);
             onClose();
         } catch (error) {
-            // Error handling is done in parent
+
         } finally {
             setIsDeleting(false);
             setPassword("");
@@ -45,8 +46,12 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title }: Delet
                         Delete Material
                     </DialogTitle>
                     <DialogDescription className="text-slate-600 dark:text-zinc-400">
-                        Are you sure you want to delete <span className="font-semibold text-slate-900 dark:text-zinc-200">"{title}"</span>?
-                        This action cannot be undone.
+                        {count > 1 ? (
+                            <>Are you sure you want to delete <span className="font-semibold text-slate-900 dark:text-zinc-200">{count} items</span>?</>
+                        ) : (
+                            <>Are you sure you want to delete <span className="font-semibold text-slate-900 dark:text-zinc-200">"{title}"</span>?</>
+                        )}
+                        <br />This action cannot be undone.
                     </DialogDescription>
                 </DialogHeader>
 

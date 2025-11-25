@@ -15,10 +15,13 @@ export interface Material {
 interface MaterialCardProps {
     material: Material;
     onDelete?: (material: Material) => void;
+    isSelected?: boolean;
+    isSelectionMode?: boolean;
+    onToggleSelection?: (id: string) => void;
 }
 import { memo } from "react";
 
-export const MaterialCard = memo(function MaterialCard({ material, onDelete }: MaterialCardProps) {
+export const MaterialCard = memo(function MaterialCard({ material, onDelete, isSelected, isSelectionMode, onToggleSelection }: MaterialCardProps) {
     const [copied, setCopied] = useState(false);
     const [titleCopied, setTitleCopied] = useState(false);
 
@@ -68,7 +71,9 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
         return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
     };
 
-    const handleDownload = () => {
+
+    const handleDownload = (e: React.MouseEvent) => {
+        e.stopPropagation();
         const downloadUrl = `/api/download?url=${encodeURIComponent(material.url)}&filename=${encodeURIComponent(material.originalName || material.title)}`;
         const link = document.createElement('a');
         link.href = downloadUrl;
@@ -78,8 +83,53 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
         document.body.removeChild(link);
     };
 
+    const handleCardClick = (e: React.MouseEvent) => {
+        if (isSelectionMode) {
+            onToggleSelection?.(material.id);
+        } else if (e.ctrlKey || e.metaKey) {
+            onToggleSelection?.(material.id);
+        }
+    };
+
+    const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(null);
+
+    const handleTouchStart = () => {
+        const timer = setTimeout(() => {
+            onToggleSelection?.(material.id);
+        }, 500); // 500ms for long press
+        setLongPressTimer(timer);
+    };
+
+    const handleTouchEnd = () => {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            setLongPressTimer(null);
+        }
+    };
+
+    const handleTouchMove = () => {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            setLongPressTimer(null);
+        }
+    };
+
     return (
-        <Card className="group hover:shadow-lg transition-all duration-300 border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-white/5 backdrop-blur-sm overflow-hidden hover:bg-gray-100 dark:hover:bg-white/10">
+        <Card
+            className={`group hover:shadow-lg transition-all duration-300 border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-white/5 backdrop-blur-sm overflow-hidden hover:bg-gray-100 dark:hover:bg-white/10 relative ${isSelected ? 'ring-2 ring-indigo-500 border-indigo-500' : ''}`}
+            onClick={handleCardClick}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onTouchMove={handleTouchMove}
+        >
+            {/* Selection Checkbox */}
+            {(isSelectionMode || isSelected) && (
+                <div className="absolute top-2 right-2 z-10">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected ? 'bg-indigo-500 border-indigo-500' : 'border-slate-400 bg-white/50 dark:bg-black/50'}`}>
+                        {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                    </div>
+                </div>
+            )}
             <CardContent className="p-3">
                 <div className="flex items-start justify-between mb-2">
                     <div className="p-2 rounded-xl bg-gray-200 dark:bg-white/5 group-hover:scale-110 transition-transform duration-300 shrink-0">
@@ -104,7 +154,10 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                         )}
                         {!isNew(material.createdAt) && <span className="w-1 h-1 bg-slate-600 rounded-full" />}
                         <button
-                            onClick={handleCopyLink}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleCopyLink();
+                            }}
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                             title="Copy Link"
                         >
@@ -130,7 +183,10 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                         </Tooltip>
                     </TooltipProvider>
                     <button
-                        onClick={handleCopyTitle}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopyTitle();
+                        }}
                         className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors shrink-0"
                         title="Copy Filename"
                     >
@@ -142,7 +198,10 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                 <Button
                     variant="outline"
                     className="flex-1 h-9 text-xs border-gray-200 dark:border-white/10 bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
-                    onClick={() => window.open(material.url, '_blank')}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(material.url, '_blank');
+                    }}
                 >
                     <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
                     View
@@ -157,7 +216,10 @@ export const MaterialCard = memo(function MaterialCard({ material, onDelete }: M
                 <Button
                     variant="ghost"
                     className="h-9 w-9 p-0 text-slate-400 hover:text-red-500 hover:bg-red-500/10"
-                    onClick={() => onDelete && onDelete(material)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete && onDelete(material);
+                    }}
                     title="Delete"
                 >
                     <Trash2 className="w-4 h-4" />

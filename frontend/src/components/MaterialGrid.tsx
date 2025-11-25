@@ -6,9 +6,12 @@ interface MaterialGridProps {
     materials: Material[];
     isLoading: boolean;
     onDelete?: (material: Material) => void;
+    selectedIds?: Set<string>;
+    onToggleSelection?: (id: string) => void;
+    isSelectionMode?: boolean;
 }
 
-export function MaterialGrid({ materials, isLoading, onDelete }: MaterialGridProps) {
+export function MaterialGrid({ materials, isLoading, onDelete, selectedIds, onToggleSelection, isSelectionMode }: MaterialGridProps) {
     if (isLoading) {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
@@ -51,7 +54,14 @@ export function MaterialGrid({ materials, isLoading, onDelete }: MaterialGridPro
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             {materials.map((material) => (
-                <MaterialCard key={material.id} material={material} onDelete={onDelete} />
+                <MaterialCard
+                    key={material.id}
+                    material={material}
+                    onDelete={onDelete}
+                    isSelected={selectedIds?.has(material.id)}
+                    isSelectionMode={isSelectionMode}
+                    onToggleSelection={onToggleSelection}
+                />
             ))}
         </div>
     );

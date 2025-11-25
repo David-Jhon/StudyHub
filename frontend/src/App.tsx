@@ -17,7 +17,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "firebase/firestore";
 import { uploadFile, deleteFile } from "@/lib/api";
-import { Search, Upload, Filter, FileText, Presentation, Image as ImageIcon, Video, FileType, Archive, CheckCircle2, AlertCircle } from "lucide-react";
+import { Search, Upload, Filter, FileText, Presentation, Image as ImageIcon, Video, FileType, Archive, CheckCircle2, AlertCircle, Trash2, X } from "lucide-react";
 import { get, del } from "idb-keyval";
 import { DeleteConfirmDialog } from "@/components/DeleteConfirmDialog";
 
@@ -34,6 +34,8 @@ function App() {
   const [sortOrder, setSortOrder] = useState("newest");
   const [initialFile, setInitialFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const isSelectionMode = selectedIds.size > 0;
   const { toast } = useToast();
 
   // Fetch materials
@@ -191,30 +193,85 @@ function App() {
   };
 
   const [materialToDelete, setMaterialToDelete] = useState<Material | null>(null);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   const handleDeleteClick = (material: Material) => {
     setMaterialToDelete(material);
+    setIsDeleteConfirmOpen(true);
+  };
+
+  const handleToggleSelection = (id: string) => {
+    setSelectedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const handleClearSelection = () => {
+    setSelectedIds(new Set());
+  };
+
+  const handleSelectAll = () => {
+    if (selectedIds.size === filteredMaterials.length) {
+      handleClearSelection();
+    } else {
+      setSelectedIds(new Set(filteredMaterials.map(m => m.id)));
+    }
   };
 
   const handleConfirmDelete = async (password: string) => {
-    if (!materialToDelete) return;
-
     try {
+      if (selectedIds.size > 0) {
+        // Bulk delete
+        const itemsToDelete = materials.filter(m => selectedIds.has(m.id));
+        let successCount = 0;
+        let failCount = 0;
 
-      await deleteFile(materialToDelete.originalName || materialToDelete.title, password);
+        for (const item of itemsToDelete) {
+          try {
+            await deleteFile(item.originalName || item.title, password);
+            await deleteDoc(doc(db, "materials", item.id));
+            successCount++;
+          } catch (error) {
+            console.error(`Failed to delete ${item.title}:`, error);
+            failCount++;
+          }
+        }
 
-      // 2. Delete from Firestore
-      await deleteDoc(doc(db, "materials", materialToDelete.id));
+        if (successCount > 0) {
+          toast({
+            title: "Deleted",
+            description: `Successfully deleted ${successCount} items.${failCount > 0 ? ` Failed to delete ${failCount} items.` : ''}`,
+            className: "bg-emerald-950 border-emerald-900 text-emerald-100",
+            action: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
+          });
+        }
 
-      toast({
-        title: "Deleted",
-        description: "Material deleted successfully",
-        className: "bg-emerald-950 border-emerald-900 text-emerald-100",
-        action: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
-      });
+        if (failCount > 0 && successCount === 0) {
+          throw new Error(`Failed to delete ${failCount} items.`);
+        }
+
+        setSelectedIds(new Set());
+      } else if (materialToDelete) {
+        // Single delete
+        await deleteFile(materialToDelete.originalName || materialToDelete.title, password);
+        await deleteDoc(doc(db, "materials", materialToDelete.id));
+
+        toast({
+          title: "Deleted",
+          description: "Material deleted successfully",
+          className: "bg-emerald-950 border-emerald-900 text-emerald-100",
+          action: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
+        });
+      }
     } catch (error: any) {
       console.error("Delete error:", error);
-      const message = error.response?.data?.error || "Failed to delete material";
+      const message = error.response?.data?.error || error.message || "Failed to delete material";
       toast({
         variant: "destructive",
         title: "Error",
@@ -222,7 +279,9 @@ function App() {
         className: "bg-red-950 border-red-900 text-red-100",
         action: <AlertCircle className="w-5 h-5 text-red-500" />,
       });
-      throw error;
+    } finally {
+      setMaterialToDelete(null);
+      setIsDeleteConfirmOpen(false);
     }
   };
 
@@ -333,6 +392,9 @@ function App() {
           materials={filteredMaterials}
           isLoading={isLoading}
           onDelete={handleDeleteClick}
+          selectedIds={selectedIds}
+          onToggleSelection={handleToggleSelection}
+          isSelectionMode={isSelectionMode}
         />
       </main>
 
@@ -353,11 +415,52 @@ function App() {
       </Suspense>
 
       <DeleteConfirmDialog
-        isOpen={!!materialToDelete}
-        onClose={() => setMaterialToDelete(null)}
+        isOpen={isDeleteConfirmOpen}
+        onClose={() => {
+          setIsDeleteConfirmOpen(false);
+          setMaterialToDelete(null);
+        }}
         onConfirm={handleConfirmDelete}
         title={materialToDelete?.title || ""}
+        count={selectedIds.size > 0 ? selectedIds.size : 1}
       />
+
+      {/* Selection Action Bar */}
+      {isSelectionMode && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900/90 dark:bg-white/10 backdrop-blur-md text-white px-4 sm:px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-4 sm:gap-6 border border-white/10 animate-in slide-in-from-bottom-10 fade-in duration-300 w-[90%] sm:w-auto justify-between sm:justify-start">
+          <div className="flex items-center gap-3 border-r border-white/20 pr-4 sm:pr-6">
+            <span className="font-semibold whitespace-nowrap text-sm sm:text-base">{selectedIds.size} selected</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleSelectAll}
+              className="h-8 text-xs hover:bg-white/10 text-slate-300 hover:text-white whitespace-nowrap"
+            >
+              {selectedIds.size === filteredMaterials.length ? 'Deselect All' : 'Select All'}
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsDeleteConfirmOpen(true)}
+              className="h-9 w-9 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded-full"
+              title="Delete Selected"
+            >
+              <Trash2 className="w-5 h-5" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleClearSelection}
+              className="h-9 w-9 hover:bg-white/10 text-slate-400 hover:text-white rounded-full"
+              title="Cancel Selection"
+            >
+              <X className="w-5 h-5" />
+            </Button>
+          </div>
+        </div>
+      )}
 
       <Toaster />
 
