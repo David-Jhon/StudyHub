@@ -11,14 +11,14 @@ export function Header({ onUploadClick }: { onUploadClick: () => void }) {
                 <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 backdrop-blur-md shadow-xl">
                     <div className="flex items-center justify-between px-4 py-3">
                         <div className="flex items-center gap-4">
-                            <div className="h-10 w-10 rounded-xl bg-indigo-600 dark:bg-indigo-600 text-white grid place-items-center shadow-md shadow-indigo-600/30">
+                            <div className="h-10 w-10 rounded-xl shadow-md shadow-indigo-600/30">
                                 <svg
                                     width="120"
                                     height="120"
                                     viewBox="0 0 120 120"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="w-6 h-6"
+                                    className="w-full h-full"
                                 >
                                     <rect width="120" height="120" rx="24" fill="#6366F1" />
                                     <rect x="28" y="36" width="64" height="48" rx="8" fill="#fff" />
