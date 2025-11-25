@@ -77,7 +77,7 @@ export function UploadModal({
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent
-                className="sm:max-w-xl bg-white dark:bg-zinc-950 text-slate-900 dark:text-zinc-50 border-gray-200 dark:border-zinc-800"
+                className="w-[95vw] sm:w-full sm:max-w-xl bg-white dark:bg-zinc-950 text-slate-900 dark:text-zinc-50 border-gray-200 dark:border-zinc-800 rounded-xl"
                 onInteractOutside={(e) => {
                     e.preventDefault();
                     onClose();

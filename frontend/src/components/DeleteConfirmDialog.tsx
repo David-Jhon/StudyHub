@@ -39,7 +39,7 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title, count =
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100">
+            <DialogContent className="w-[95vw] sm:w-full sm:max-w-md bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 rounded-xl">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-red-500">
                         <AlertTriangle className="w-5 h-5" />
@@ -49,7 +49,7 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title, count =
                         {count > 1 ? (
                             <>Are you sure you want to delete <span className="font-semibold text-slate-900 dark:text-zinc-200">{count} items</span>?</>
                         ) : (
-                            <>Are you sure you want to delete <span className="font-semibold text-slate-900 dark:text-zinc-200">"{title}"</span>?</>
+                            <>Are you sure you want to delete <span className="font-semibold text-slate-900 dark:text-zinc-200 break-all">"{title}"</span>?</>
                         )}
                         <br />This action cannot be undone.
                     </DialogDescription>
