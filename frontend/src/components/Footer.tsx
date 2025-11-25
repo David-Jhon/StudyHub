@@ -2,7 +2,7 @@ import { Send } from "lucide-react";
 
 export function Footer() {
     return (
-        <footer className="mt-20 border-t border-white/10 bg-black py-12">
+        <footer className="mt-20 border-t border-gray-200 dark:border-white/10 bg-white dark:bg-black py-12">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8">
                 {/* Community Links */}
                 <div className="flex items-center gap-6">
@@ -10,9 +10,9 @@ export function Footer() {
                         href="https://t.me/NosratBin"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center gap-2 text-slate-400 hover:text-indigo-400 transition-colors"
+                        className="group flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-indigo-400 transition-colors"
                     >
-                        <div className="p-2 rounded-full bg-white/5 group-hover:bg-indigo-500/10 transition-colors">
+                        <div className="p-2 rounded-full bg-gray-100 dark:bg-white/5 group-hover:bg-gray-200 dark:group-hover:bg-indigo-500/10 transition-colors">
                             <Send className="w-5 h-5" />
                         </div>
                         <span className="font-medium">Telegram</span>
@@ -22,9 +22,9 @@ export function Footer() {
                         href="https://discord.com/users/762959965463773184"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center gap-2 text-slate-400 hover:text-indigo-400 transition-colors"
+                        className="group flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-indigo-400 transition-colors"
                     >
-                        <div className="p-2 rounded-full bg-white/5 group-hover:bg-indigo-500/10 transition-colors">
+                        <div className="p-2 rounded-full bg-gray-100 dark:bg-white/5 group-hover:bg-gray-200 dark:group-hover:bg-indigo-500/10 transition-colors">
                             <svg
                                 className="w-5 h-5 fill-current"
                                 viewBox="0 0 24 24"

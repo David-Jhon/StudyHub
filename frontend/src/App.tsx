@@ -227,7 +227,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-white dark:bg-black text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-500/30">
       <Header onUploadClick={() => setIsUploadModalOpen(true)} />
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
@@ -241,14 +241,14 @@ function App() {
           </p>
           <Button
             onClick={() => setIsUploadModalOpen(true)}
-            className="rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-6 text-base font-semibold shadow-lg shadow-indigo-600/30"
+            className="rounded-2xl bg-black dark:bg-indigo-600 hover:bg-gray-800 dark:hover:bg-indigo-500 text-white px-6 py-6 text-base font-semibold shadow-lg dark:shadow-indigo-600/30"
           >
             Upload material
           </Button>
         </div>
 
         {/* Filters */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4 mb-8 backdrop-blur-sm">
+        <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 p-4 mb-8 backdrop-blur-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             <div className="lg:col-span-8 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
@@ -256,12 +256,12 @@ function App() {
                 placeholder="Search title, type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-black/20 border-white/10 focus:border-indigo-500/50 transition-colors"
+                className="pl-10 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 focus:border-indigo-500/50 transition-colors"
               />
             </div>
             <div className="lg:col-span-4 flex gap-2">
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger className="w-full bg-black/20 border-white/10">
+                <SelectTrigger className="w-full bg-white dark:bg-black/20 border-gray-200 dark:border-white/10">
                   <SelectValue placeholder="All types" />
                 </SelectTrigger>
                 <SelectContent>
@@ -316,7 +316,7 @@ function App() {
                 </SelectContent>
               </Select>
               <Select value={sortOrder} onValueChange={setSortOrder}>
-                <SelectTrigger className="w-[180px] bg-black/20 border-white/10">
+                <SelectTrigger className="w-[180px] bg-white dark:bg-black/20 border-gray-200 dark:border-white/10">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>

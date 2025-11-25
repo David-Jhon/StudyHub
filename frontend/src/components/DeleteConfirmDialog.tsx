@@ -38,20 +38,20 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title }: Delet
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md bg-zinc-950 border-zinc-800 text-zinc-100">
+            <DialogContent className="sm:max-w-md bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-red-500">
                         <AlertTriangle className="w-5 h-5" />
                         Delete Material
                     </DialogTitle>
-                    <DialogDescription className="text-zinc-400">
-                        Are you sure you want to delete <span className="font-semibold text-zinc-200">"{title}"</span>?
+                    <DialogDescription className="text-slate-600 dark:text-zinc-400">
+                        Are you sure you want to delete <span className="font-semibold text-slate-900 dark:text-zinc-200">"{title}"</span>?
                         This action cannot be undone.
                     </DialogDescription>
                 </DialogHeader>
 
                 <div className="py-4">
-                    <label className="text-sm font-medium text-zinc-300 mb-2 block">
+                    <label className="text-sm font-medium text-slate-700 dark:text-zinc-300 mb-2 block">
                         Cast The Magic Spell
                     </label>
                     <Input
@@ -59,7 +59,7 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title }: Delet
                         placeholder="Enter secret password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="bg-zinc-900 border-zinc-800 focus:border-red-500/50"
+                        className="bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 focus:border-red-500/50"
                         onKeyDown={(e) => {
                             if (e.key === "Enter") handleConfirm();
                         }}
@@ -71,7 +71,7 @@ export function DeleteConfirmDialog({ isOpen, onClose, onConfirm, title }: Delet
                         variant="ghost"
                         onClick={onClose}
                         disabled={isDeleting}
-                        className="hover:bg-zinc-900 text-zinc-400 hover:text-zinc-200"
+                        className="hover:bg-gray-100 dark:hover:bg-zinc-900 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200"
                     >
                         Cancel
                     </Button>
